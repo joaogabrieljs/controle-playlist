@@ -31,7 +31,6 @@ app.use(methodOverride(function (req, res) {
     delete req.body._method
     return method
   }
-  }));
 
 app.use('/', index);
 
