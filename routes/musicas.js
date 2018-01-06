@@ -16,15 +16,45 @@ router.get('/add', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+    db("musicas").insert(req.body).then((ids) =>  {
+        res.redirect('/');
+    },next)
 });
 
-router.get('/edit/:id', (req, res, next) => { 
+router.get('/edit/:id', (req, res, next) => {
+    const {id} = req.params;
+
+    db("musicas").where("id", id).first().then((musica) => {
+        if (!musica) {
+            return res.send(400);
+        }
+
+        res.render("edit.njk", {
+            musica: musica
+        });
+    }, next);
 });
 
 router.put('/edit/:id', (req, res, next) => { 
+    const {id} = req.params;
+
+    db("musicas").where("id", id).update(req.body).then((result) => {
+        if (result === 0) {
+            return res.send(400);
+        }
+
+        res.redirect("/");
+    }, next)
 });
 
-router.delete('/delete/:id', (req, res, next) => { 
+router.delete('/delete/:id', (req, res, next) => {
+    db("musicas").where("id", id).delete().then((result) => {
+        if (result === 0) {
+            return res.send(400);
+        }
+
+        res.redirect("/");
+    }, next)
 });
 
 module.exports = router;
