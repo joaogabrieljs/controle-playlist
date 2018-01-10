@@ -6,8 +6,6 @@ Manage your favorite songs with this amazing application!
 
 ```
 Node.js
-Npm
-MongoDB local server
 ```
 ```
 Npm
